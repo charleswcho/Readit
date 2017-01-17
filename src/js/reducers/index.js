@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {
   SELECT_REDDIT, INVALIDATE_REDDIT,
-  REQUEST_POSTS, RECEIVE_POSTS
+  FETCH_POSTS, RECEIVE_POSTS
 } from '../actions'
 
 const selectedReddit = (state = 'reactjs', action) => {
@@ -24,7 +24,7 @@ const posts = (state = {
         ...state,
         didInvalidate: true
       }
-    case REQUEST_POSTS:
+    case FETCH_POSTS:
       return {
         ...state,
         isFetching: true,
@@ -35,8 +35,7 @@ const posts = (state = {
         ...state,
         isFetching: false,
         didInvalidate: false,
-        items: action.posts,
-        lastUpdated: action.receivedAt
+        items: action.posts
       }
     default:
       return state
@@ -47,11 +46,8 @@ const postsByReddit = (state = { }, action) => {
   switch (action.type) {
     case INVALIDATE_REDDIT:
     case RECEIVE_POSTS:
-    case REQUEST_POSTS:
-      return {
-        ...state,
-        [action.reddit]: posts(state[action.reddit], action)
-      }
+    case FETCH_POSTS:
+      return { ...state, [action.reddit]: posts(state[action.reddit], action) }
     default:
       return state
   }
