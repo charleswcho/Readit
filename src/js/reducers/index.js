@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux'
 import {
   ADD_SUBREDDIT, REMOVE_SUBREDDIT,
-  FETCH_POSTS, RECEIVE_POSTS } from '../actions'
+  REQUEST_POSTS, RECEIVE_POSTS } from '../actions'
 
-const subReddits = (state = ['reactjs'], action) => {
+const subReddits = (state = [], action) => {
   switch (action.type) {
     case ADD_SUBREDDIT:
       return state.concat(action.reddit)
     case REMOVE_SUBREDDIT:
-      const idx = state.indexOf(action.reddit)
+      let newState = [...state]
 
-      return [...state].splice(idx, 1)
+      newState.splice(action.idx, 1)
+
+      return newState
     default:
       return state
   }
@@ -18,7 +20,7 @@ const subReddits = (state = ['reactjs'], action) => {
 
 const postsByReddit = (state = { isFetching: false, items: [] }, action) => {
   switch (action.type) {
-    case FETCH_POSTS:
+    case REQUEST_POSTS:
       return {
         ...state,
         isFetching: true,

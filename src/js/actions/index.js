@@ -8,27 +8,30 @@ export const addSubReddit = reddit => ({
   reddit
 })
 
-export const removeSubReddit = reddit => ({
+export const removeSubReddit = idx => ({
   type: REMOVE_SUBREDDIT,
-  reddit
+  idx
 })
 
-export const requestPosts = reddit => ({
-  type: REQUEST_POSTS,
-  reddit
+export const requestPosts = () => ({
+  type: REQUEST_POSTS
 })
 
-export const receivePosts = (reddit, json) => ({
+export const receivePosts = json => ({
   type: RECEIVE_POSTS,
-  reddit,
-  posts: json.data.children.map(child => child.data),
-  receivedAt: Date.now()
+  posts: json.data.children.map(child => child.data)
 })
 
 export const fetchPosts = reddit => dispatch => {
-  dispatch(requestPosts(reddit))
-  return fetch(`https://www.reddit.com/r/${reddit}.json`)
+  let url = `https://www.reddit.com/hot.json`
+
+  if (reddit) {
+    url = `https://www.reddit.com/r/${reddit}.json`
+  }
+
+  dispatch(requestPosts())
+  return fetch(url)
     .then(response => response.json())
-    .then(json => dispatch(receivePosts(reddit, json)))
+    .then(json => dispatch(receivePosts(json)))
     .catch(e => console.log(e))
 }

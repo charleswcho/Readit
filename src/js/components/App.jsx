@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addSubReddit, removeSubReddit, fetchPosts } from '../actions'
+import { addSubReddit, removeSubReddit,
+         fetchPosts } from '../actions'
 import SubInput from './SubInput'
-import SubRedditChip from './SubRedditChip'
+import ChipIndex from './ChipIndex'
 
 import Posts from './Posts'
 
@@ -17,20 +18,27 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchPosts('reactjs'))
+    this.props.dispatch(fetchPosts())
   }
 
-  handleSubmit = nextReddit => {
+  componentWillReceiveProps({ subReddits }) {
     const { dispatch } = this.props
 
-    dispatch(addSubReddit(nextReddit))
-    dispatch(fetchPosts(nextReddit))
+    if (this.props.subReddits.length !== subReddits.length) {
+      if (subReddits.length > 0) {
+        dispatch(fetchPosts(subReddits.join('')))
+      } else {
+        dispatch(fetchPosts())
+      }
+    }
   }
 
-  handleDelete = () => {
-    let name = this.children
+  handleSubmit = newSubReddit => {
+    this.props.dispatch(addSubReddit(newSubReddit))
+  }
 
-    this.props.dispatch(removeSubReddit(name))
+  handleDelete = (idx) => {
+    this.props.dispatch(removeSubReddit(idx))
   }
 
   render() {
@@ -41,11 +49,7 @@ class App extends Component {
       <div>
         <SubInput handleSubmit={this.handleSubmit} />
 
-        {subReddits.map((subreddit, idx) => {
-          return (
-            <SubRedditChip key={idx} name={subreddit} handleDelete={this.handleDelete} />
-          )
-        })}
+        <ChipIndex chips={subReddits} handleDelete={this.handleDelete}/>
 
         {isEmpty ? (isFetching ? <CircularProgress /> : <h2>Empty.</h2>) : <Posts posts={posts} />}
       </div>
