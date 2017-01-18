@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react'
 
-const Picker = ({ value, onChange }) => (
+const SubInput = ({ value, handleSubmit }) => (
   <span>
-    <input onChange={e => onChange(e.target.value)}
+    <input onKeyUp={e => (e.keyCode === 13) ?
+           handleSubmit(e.target.value) : null}
            value={value}/>
   </span>
 )
 
-Picker.propTypes = {
+SubInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
 
-export default Picker
+export default SubInput

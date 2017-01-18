@@ -1,9 +1,15 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const SELECT_REDDIT = 'SELECT_REDDIT'
+export const ADD_SUBREDDIT = 'ADD_SUBREDDIT'
+export const REMOVE_SUBREDDIT = 'REMOVE_SUBREDDIT'
 
-export const selectReddit = reddit => ({
-  type: SELECT_REDDIT,
+export const addSubReddit = reddit => ({
+  type: ADD_SUBREDDIT,
+  reddit
+})
+
+export const removeSubReddit = reddit => ({
+  type: REMOVE_SUBREDDIT,
   reddit
 })
 

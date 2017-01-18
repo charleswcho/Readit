@@ -1,57 +1,64 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { selectReddit, fetchPosts } from '../actions'
+import { addSubReddit, removeSubReddit, fetchPosts } from '../actions'
 import SubInput from './SubInput'
+import SubRedditChip from './SubRedditChip'
+
 import Posts from './Posts'
+
+import CircularProgress from 'material-ui/CircularProgress';
 
 class App extends Component {
   static propTypes = {
-    selectedReddit: PropTypes.string.isRequired,
+    subReddits: PropTypes.array.isRequired,
     posts: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    const { dispatch, selectedReddit } = this.props
-    dispatch(fetchPosts(selectedReddit))
+    this.props.dispatch(fetchPosts('reactjs'))
   }
 
-  handleChange = nextReddit => {
-    this.props.dispatch(selectReddit(nextReddit))
+  handleSubmit = nextReddit => {
+    const { dispatch } = this.props
+
+    dispatch(addSubReddit(nextReddit))
+    dispatch(fetchPosts(nextReddit))
+  }
+
+  handleDelete = () => {
+    let name = this.children
+
+    this.props.dispatch(removeSubReddit(name))
   }
 
   render() {
-    const { selectedReddit, posts, isFetching } = this.props
+    const { subReddits, posts, isFetching } = this.props
     const isEmpty = posts.length === 0
+
     return (
       <div>
-        <SubInput value={selectedReddit}
-                  onChange={this.handleChange} />
+        <SubInput handleSubmit={this.handleSubmit} />
 
-        {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-              <Posts posts={posts} />
-            </div>
-        }
+        {subReddits.map((subreddit, idx) => {
+          return (
+            <SubRedditChip key={idx} name={subreddit} handleDelete={this.handleDelete} />
+          )
+        })}
+
+        {isEmpty ? (isFetching ? <CircularProgress /> : <h2>Empty.</h2>) : <Posts posts={posts} />}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const { selectedReddit, postsByReddit } = state
-  const {
-    isFetching,
-    items: posts
-  } = postsByReddit[selectedReddit] || {
-    isFetching: true,
-    items: []
-  }
+  const { subReddits, postsByReddit } = state
+  const { isFetching, items: posts } = postsByReddit || { isFetching: true, items: [] }
 
   return {
-    selectedReddit,
+    subReddits,
     posts,
     isFetching
   }
