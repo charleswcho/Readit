@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { addSubReddit, removeSubReddit,
          fetchPosts } from '../actions'
-import SubInput from './SubInput'
-import ChipIndex from './ChipIndex'
 
-import Posts from './Posts'
+import FilterTabs from './FilterTabs'
+
+import SubInput from './components/SubInput'
+import ChipIndex from './components/ChipIndex'
+import Posts from './components/Posts'
 
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -26,7 +28,7 @@ class App extends Component {
 
     if (this.props.subReddits.length !== subReddits.length) {
       if (subReddits.length > 0) {
-        dispatch(fetchPosts(subReddits.join('')))
+        dispatch(fetchPosts(subReddits.join('+')))
       } else {
         dispatch(fetchPosts())
       }
@@ -37,7 +39,7 @@ class App extends Component {
     this.props.dispatch(addSubReddit(newSubReddit))
   }
 
-  handleDelete = (idx) => {
+  handleDelete = idx => {
     this.props.dispatch(removeSubReddit(idx))
   }
 
@@ -49,7 +51,9 @@ class App extends Component {
       <div>
         <SubInput handleSubmit={this.handleSubmit} />
 
-        <ChipIndex chips={subReddits} handleDelete={this.handleDelete}/>
+        <ChipIndex chips={subReddits} handleDelete={this.handleDelete} />
+
+        <FilterTabs />
 
         {isEmpty ? (isFetching ? <CircularProgress /> : <h2>Empty.</h2>) : <Posts posts={posts} />}
       </div>
@@ -58,8 +62,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { subReddits, postsByReddit } = state
-  const { isFetching, items: posts } = postsByReddit || { isFetching: true, items: [] }
+  const { subReddits, redditPosts } = state
+  const { isFetching, posts } = redditPosts || { isFetching: true, posts: [] }
 
   return {
     subReddits,

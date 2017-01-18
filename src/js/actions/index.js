@@ -1,7 +1,11 @@
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_SUBREDDIT = 'ADD_SUBREDDIT'
 export const REMOVE_SUBREDDIT = 'REMOVE_SUBREDDIT'
+
+export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const FILTER_HOT = 'FILTER_HOT'
+export const FILTER_NEW = 'FILTER_NEW'
+export const FILTER_TOP = 'FILTER_TOP'
 
 export const addSubReddit = reddit => ({
   type: ADD_SUBREDDIT,
@@ -35,3 +39,15 @@ export const fetchPosts = reddit => dispatch => {
     .then(json => dispatch(receivePosts(json)))
     .catch(e => console.log(e))
 }
+
+export const filterHot = () => ({
+  type: FILTER_HOT
+})
+
+export const filterNew = () => ({
+  type: FILTER_NEW
+})
+
+export const filterTop = () => ({
+  type: FILTER_TOP
+})

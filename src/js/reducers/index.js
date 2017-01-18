@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import {
   ADD_SUBREDDIT, REMOVE_SUBREDDIT,
-  REQUEST_POSTS, RECEIVE_POSTS } from '../actions'
+  REQUEST_POSTS, RECEIVE_POSTS,
+  FILTER_HOT, FILTER_NEW, FILTER_TOP} from '../actions'
 
 const subReddits = (state = [], action) => {
   switch (action.type) {
@@ -18,26 +19,34 @@ const subReddits = (state = [], action) => {
   }
 }
 
-const postsByReddit = (state = { isFetching: false, items: [] }, action) => {
+const filterPosts = (posts) => {
+  let filtered = { hot: [...posts] }
+
+  filtered.new = [...posts].sort((a, b) => b.created_utc - a.created_utc)
+  filtered.top = [...posts].sort((a, b) => b.ups - a.ups)
+
+  return filtered
+}
+
+const redditPosts = (state = { isFetching: false, posts: [] }, action) => {
   switch (action.type) {
     case REQUEST_POSTS:
-      return {
-        ...state,
-        isFetching: true,
-      }
+      return {...state, isFetching: true,}
     case RECEIVE_POSTS:
-      return {
-        ...state,
-        isFetching: false,
-        items: action.posts
-      }
+      return {...state, isFetching: false, posts: action.posts, filtered: filterPosts(action.posts)}
+    case FILTER_HOT:
+      return {...state, posts: state.filtered.hot }
+    case FILTER_NEW:
+      return {...state, posts: state.filtered.new }
+    case FILTER_TOP:
+      return {...state, posts: state.filtered.top }
     default:
       return state
   }
 }
 
 const rootReducer = combineReducers({
-  postsByReddit,
+  redditPosts,
   subReddits
 })
 
