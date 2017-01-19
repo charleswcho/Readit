@@ -20,18 +20,22 @@ export default class ChipIndex extends Component {
   renderChip = (chip, idx) => {
     return (
       <Chip key={idx}
-            onRequestDelete={() => this.props.handleDelete(idx)}
-            style={styles.chip}>
+            style={styles.chip}
+            onRequestDelete={() => this.props.handleDelete(idx)}>
         {chip}
       </Chip>
     );
   }
 
   render() {
-    return (
-      <div style={styles.wrapper}>
-        {this.props.chips.map((chip, idx) => this.renderChip(chip, idx))}
-      </div>
-    );
+    if (this.props.chips.length > 0) {
+      return (
+        <div className='chips' style={styles.wrapper}>
+          {this.props.chips.map((chip, idx) => this.renderChip(chip, idx))}
+        </div>
+      );
+    } else {
+      return null
+    }
   }
 }

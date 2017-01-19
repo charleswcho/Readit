@@ -51,9 +51,6 @@ a {
     width: 60px;
     display: flex;
     align-items: center; }
-  .first #default {
-    height: 70px;
-    width: 70px; }
   .first .thumbnail {
     height: 70px;
     width: 70px; }
@@ -66,5 +63,8 @@ a {
     font-size: 12px; }
     .second .under .author {
       padding-right: 5px; }
+
+.chips {
+  padding: 0 20px 20px 40px; }
 
 /*# sourceMappingURL=index.css.map */
