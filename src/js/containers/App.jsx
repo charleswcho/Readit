@@ -5,9 +5,9 @@ import { addSubReddit, removeSubReddit,
 
 import FilterTabs from './FilterTabs'
 
-import SubInput from './components/SubInput'
-import ChipIndex from './components/ChipIndex'
-import Posts from './components/Posts'
+import SubInput from '../components/SubInput'
+import ChipIndex from '../components/ChipIndex'
+import Posts from '../components/Posts'
 
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -48,7 +48,9 @@ class App extends Component {
     const isEmpty = posts.length === 0
 
     return (
-      <div>
+      <div className='App'>
+        <h1 className='App-header'>Readit</h1>
+
         <SubInput handleSubmit={this.handleSubmit} />
 
         <ChipIndex chips={subReddits} handleDelete={this.handleDelete} />

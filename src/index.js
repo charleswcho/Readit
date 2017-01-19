@@ -7,7 +7,7 @@ import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
 import reducer from './js/reducers'
 
-import App from './js/components/App'
+import App from './js/containers/App'
 
 import './css/index.css'
 

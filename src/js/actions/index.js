@@ -37,7 +37,9 @@ export const fetchPosts = reddit => dispatch => {
   return fetch(url)
     .then(response => response.json())
     .then(json => dispatch(receivePosts(json)))
-    .catch(e => console.log(e))
+    .catch(e => {
+      console.log(e)
+    })
 }
 
 export const filterHot = () => ({
