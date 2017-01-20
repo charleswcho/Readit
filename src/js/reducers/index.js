@@ -31,15 +31,15 @@ const filterPosts = (posts) => {
 const redditPosts = (state = { isFetching: false, posts: [] }, action) => {
   switch (action.type) {
     case REQUEST_POSTS:
-      return {...state, isFetching: true,}
+      return {...state, isFetching: true}
     case RECEIVE_POSTS:
       return {...state, isFetching: false, posts: action.posts, filtered: filterPosts(action.posts)}
     case FILTER_HOT:
-      return {...state, posts: state.filtered.hot }
+      return {...state, posts: state.filtered.hot}
     case FILTER_NEW:
-      return {...state, posts: state.filtered.new }
+      return {...state, posts: state.filtered.new}
     case FILTER_TOP:
-      return {...state, posts: state.filtered.top }
+      return {...state, posts: state.filtered.top}
     default:
       return state
   }

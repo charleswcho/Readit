@@ -3,11 +3,11 @@ import Chip from 'material-ui/Chip'
 
 const styles = {
   chip: {
-    margin: 4,
+    margin: 4
   },
   wrapper: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
 };
 

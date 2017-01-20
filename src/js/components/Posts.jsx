@@ -3,7 +3,9 @@ import Post from './Post'
 
 const Posts = ({posts}) => (
   <ul className='posts'>
-    {posts.map((post, idx) => Post(post, idx))}
+    {
+      posts.map((post, idx) => Post(post, idx))
+    }
   </ul>
 )
 
