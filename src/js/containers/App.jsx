@@ -26,15 +26,24 @@ class App extends Component {
   componentWillReceiveProps({ subReddits }) {
     const { dispatch } = this.props
 
+    // Only fetch new posts if a subreddit was added or removed
     if (this.props.subReddits.length !== subReddits.length) {
+
+      // If subreddit tags already exist we add on the new subreddit and make
+      // a new query.  We then fetch new posts based on the new query.
       if (subReddits.length > 0) {
         dispatch(fetchPosts(subReddits.join('+')))
       } else {
+        // If there are no subreddit tags we fetch the default front page of Reddit
         dispatch(fetchPosts())
       }
     }
   }
 
+  /**
+   * Handlers for Adding and Removing subreddits from state
+   */
+   
   handleSubmit = newSubReddit => {
     this.props.dispatch(addSubReddit(newSubReddit))
   }
@@ -65,6 +74,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   const { subReddits, redditPosts } = state
+
+  // If redditPosts doesn't currently exist we assume that they are getting fetched
   const { isFetching, posts } = redditPosts || { isFetching: true, posts: [] }
 
   return {

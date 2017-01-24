@@ -2,8 +2,10 @@ import { combineReducers } from 'redux'
 import {
   ADD_SUBREDDIT, REMOVE_SUBREDDIT,
   REQUEST_POSTS, RECEIVE_POSTS,
-  FILTER_HOT, FILTER_NEW, FILTER_TOP} from '../actions'
+  FILTER_HOT, FILTER_NEW, FILTER_TOP
+} from '../actions'
 
+/* Subreddits Reducer */
 const subReddits = (state = [], action) => {
   switch (action.type) {
     case ADD_SUBREDDIT:
@@ -19,6 +21,12 @@ const subReddits = (state = [], action) => {
   }
 }
 
+/**
+ * Filters posts received from Reddit
+ * @param {Array.<Object>} posts - Posts received from Reddit
+ * @returns {Object.<string, Array>} filterd - Posts filtered by time and upvotes
+ */
+
 const filterPosts = (posts) => {
   let filtered = { hot: [...posts] }
 
@@ -28,6 +36,7 @@ const filterPosts = (posts) => {
   return filtered
 }
 
+/* Posts Reducer */ 
 const redditPosts = (state = { isFetching: false, posts: [] }, action) => {
   switch (action.type) {
     case REQUEST_POSTS:

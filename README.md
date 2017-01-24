@@ -1,5 +1,7 @@
 # Readit
 
+[live](https://charleswcho.github.io/readit/)
+
 Search through subreddits using this simple and clean app!
 
 ## Installation

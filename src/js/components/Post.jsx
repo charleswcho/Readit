@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react'
 
 const First = (post, idx) => {
+  // default thumbnail
   let img = <div className='thumbnail'><i className="fa fa-book fa-4x" aria-hidden="true"/></div>
 
   const { thumbnail, ups } = post
 
+  // Replace default thumbnail with given thumbnail
   if (thumbnail !== 'self' && thumbnail !== 'default' && thumbnail !== 'nsfw') {
     img = <img className='thumbnail' src={thumbnail} alt='thumbnail'/>
   }
