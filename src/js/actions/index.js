@@ -25,18 +25,15 @@ export const requestPosts = () => ({
   type: REQUEST_POSTS
 })
 
-export const receivePosts = json => {
-  debugger
-  return {
-    type: RECEIVE_POSTS,
-    posts: json.data.children.map(child => child.data)
-  }
-}
+export const receivePosts = json => ({
+  type: RECEIVE_POSTS,
+  posts: json.data.children.map(child => child.data)
+})
 
 export const fetchPosts = reddit => dispatch => {
   // default url (front page of Reddit)
-  let url = `https://www.reddit.com/hot.json`
-
+  // let url = 'https://www.reddit.com/hot.json'
+  let url = 'http://www.google.com'
   // If subreddits exist we make a custom url
   if (reddit) {
     url = `https://www.reddit.com/r/${reddit}.json`
@@ -49,6 +46,8 @@ export const fetchPosts = reddit => dispatch => {
     .then(json => dispatch(receivePosts(json)))
     .catch(e => { alert('Invalid query') })
 }
+
+/* Filter Posts actions */
 
 export const filterHot = () => ({
   type: FILTER_HOT

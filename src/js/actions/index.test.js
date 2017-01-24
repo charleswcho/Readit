@@ -35,7 +35,7 @@ describe('posts actions', () => {
     expect(actions.requestPosts()).toEqual(expectedAction)
   })
 
-  it('should create an action to receive posts and parse out data', () => {
+  it('should create an action to receive posts and parse data', () => {
     const json = { data: { children: [{ data: { name: 'post0' } }] } },
           posts = [{ name: 'post0' }]
     const expectedAction = {
@@ -45,21 +45,45 @@ describe('posts actions', () => {
     expect(actions.receivePosts(json)).toEqual(expectedAction)
   })
 
+  afterEach(() => {
+    nock.cleanAll()
+  })
+
   it('creates RECEIVE_POSTS when fetching posts is done', () => {
-    nock('https://www.reddit.com/hot.json')
+    nock('http://www.google.com')
+      .log(console.log)
       .get('/')
-      .reply(200, { data: { children: [{ data: { name: 'post0' } }] } })
+      .reply(200, { data: { children: [{ data: { name: 'post0' } }]
+    }})
 
     const expectedActions = [
       { type: actions.REQUEST_POSTS },
       { type: actions.RECEIVE_POSTS, posts: [{ name: 'post0' }] }
     ]
-    
+
+    console.log(expectedActions)
+
     const store = mockStore({ posts: [] })
 
     return store.dispatch(actions.fetchPosts())
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
       })
+  })
+
+  it('should create filter actions', () => {
+    const expectedAction = [
+      { type: actions.FILTER_HOT },
+      { type: actions.FILTER_NEW },
+      { type: actions.FILTER_TOP }
+    ]
+
+    const store = mockStore()
+
+    store.dispatch(actions.filterHot())
+    store.dispatch(actions.filterNew())
+    store.dispatch(actions.filterTop())
+
+    expect(store.getActions()).toEqual(expectedAction)
   })
 })

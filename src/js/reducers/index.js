@@ -6,7 +6,7 @@ import {
 } from '../actions'
 
 /* Subreddits Reducer */
-const subReddits = (state = [], action) => {
+export const subReddits = (state = [], action) => {
   switch (action.type) {
     case ADD_SUBREDDIT:
       return state.concat(action.reddit)
@@ -27,7 +27,7 @@ const subReddits = (state = [], action) => {
  * @returns {Object.<string, Array>} filterd - Posts filtered by time and upvotes
  */
 
-const filterPosts = (posts) => {
+export const filterPosts = (posts) => {
   let filtered = { hot: [...posts] }
 
   filtered.new = [...posts].sort((a, b) => b.created_utc - a.created_utc)
@@ -36,8 +36,8 @@ const filterPosts = (posts) => {
   return filtered
 }
 
-/* Posts Reducer */ 
-const redditPosts = (state = { isFetching: false, posts: [] }, action) => {
+/* Posts Reducer */
+export const redditPosts = (state = { isFetching: false, posts: [] }, action) => {
   switch (action.type) {
     case REQUEST_POSTS:
       return {...state, isFetching: true}
