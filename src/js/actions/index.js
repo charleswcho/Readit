@@ -25,10 +25,13 @@ export const requestPosts = () => ({
   type: REQUEST_POSTS
 })
 
-export const receivePosts = json => ({
-  type: RECEIVE_POSTS,
-  posts: json.data.children.map(child => child.data)
-})
+export const receivePosts = json => {
+  debugger
+  return {
+    type: RECEIVE_POSTS,
+    posts: json.data.children.map(child => child.data)
+  }
+}
 
 export const fetchPosts = reddit => dispatch => {
   // default url (front page of Reddit)
@@ -40,6 +43,7 @@ export const fetchPosts = reddit => dispatch => {
   }
 
   dispatch(requestPosts())
+
   return fetch(url)
     .then(response => response.json())
     .then(json => dispatch(receivePosts(json)))
