@@ -32,8 +32,7 @@ export const receivePosts = json => ({
 
 export const fetchPosts = reddit => dispatch => {
   // default url (front page of Reddit)
-  // let url = 'https://www.reddit.com/hot.json'
-  let url = 'http://www.google.com'
+  let url = 'https://www.reddit.com/hot.json'
   // If subreddits exist we make a custom url
   if (reddit) {
     url = `https://www.reddit.com/r/${reddit}.json`

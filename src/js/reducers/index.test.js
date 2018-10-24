@@ -76,7 +76,7 @@ describe('Posts reducer', () => {
       .toEqual({ isFetching: false, posts: posts, filtered: expectedPosts })
   })
 
-  /* Filtering posts tests */
+  // Filtering posts tests 
 
   it('should handle FILTER_HOT', () => {
     expect(
