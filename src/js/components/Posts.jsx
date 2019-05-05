@@ -1,16 +1,14 @@
-import React, { PropTypes } from 'react'
-import Post from './Post'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Posts = ({posts}) => (
-  <ul className='posts'>
-    {
-      posts.map((post, idx) => Post(post, idx))
-    }
-  </ul>
-)
+import Post from './Post';
+
+const Posts = ({ posts }) => (
+  <ul className="posts">{posts.map((post, idx) => Post(post, idx))}</ul>
+);
 
 Posts.propTypes = {
   posts: PropTypes.array.isRequired
-}
+};
 
-export default Posts
+export default Posts;

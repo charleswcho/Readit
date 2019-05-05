@@ -1,42 +1,56 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux'
-import { filterHot, filterNew, filterTop } from '../actions'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import {Tabs, Tab} from 'material-ui/Tabs';
+import { connect } from 'react-redux';
+import { filterHot, filterNew, filterTop } from '../actions';
+
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 class FilterTabs extends Component {
+  state = {
+    tab: 'hot'
+  };
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired
-  }
+  };
 
-  handleActive = (e) => {
-    const { dispatch } = this.props
+  handleChange = (_, newValue) => {
+    const { dispatch } = this.props;
 
-    switch (e.props.index) {
-      case 0:
-        dispatch(filterHot())
-        break
-      case 1:
-        dispatch(filterNew())
-        break
-      case 2:
-        dispatch(filterTop())
-        break
+    this.setState({ tab: newValue });
+
+    switch (newValue) {
+      case 'hot':
+        dispatch(filterHot());
+        break;
+      case 'new':
+        dispatch(filterNew());
+        break;
+      case 'top':
+        dispatch(filterTop());
+        break;
       default:
-        console.log('No action Called')
-        break
+        console.log('No action Called');
+        break;
     }
-  }
+  };
 
   render() {
+    const { tab } = this.state;
+
     return (
-      <Tabs>
-        <Tab label="Hot" onActive={this.handleActive} />
-        <Tab label="New" onActive={this.handleActive} />
-        <Tab label="Top" onActive={this.handleActive} />
-      </Tabs>
-    )
+      <AppBar position="static">
+        <Tabs value={tab} onChange={this.handleChange} centered>
+          <Tab value="hot" label="Hot" />
+          <Tab value="new" label="New" />
+          <Tab value="top" label="Top" />
+        </Tabs>
+      </AppBar>
+    );
   }
-};
+}
 
 export default connect()(FilterTabs);

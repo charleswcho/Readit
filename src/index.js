@@ -1,37 +1,32 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
-import reducer from './js/reducers'
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import reducer from './js/reducers';
 
-import App from './js/containers/App'
+import App from './js/containers/App';
 
-import './css/index.css'
+import './css/index.sass';
 
 /** Material UI */
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-injectTapEventPlugin()
+// import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const middleware = [ thunk ]
+const middleware = [thunk];
 
 if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger())
+  middleware.push(logger);
 }
 
-const store = createStore(
-  reducer,
-  applyMiddleware(...middleware)
-)
+const store = createStore(reducer, applyMiddleware(...middleware));
 
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider>
-      <App />
-    </MuiThemeProvider>
+    {/* <MuiThemeProvider> */}
+    <App />
+    {/* </MuiThemeProvider> */}
   </Provider>,
   document.getElementById('root')
-)
+);
