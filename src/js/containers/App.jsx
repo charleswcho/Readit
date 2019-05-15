@@ -57,8 +57,8 @@ class App extends Component {
     const isEmpty = posts.length === 0;
 
     return (
-      <div className="App">
-        <h1 className="App-header">Readit</h1>
+      <div className="app">
+        <h1 className="app-header">Readit</h1>
 
         <SubInput handleSubmit={this.handleSubmit} />
 
@@ -68,7 +68,9 @@ class App extends Component {
 
         {isEmpty ? (
           isFetching ? (
-            <CircularProgress />
+            <div className="loading-container">
+              <CircularProgress />
+            </div>
           ) : (
             <h2>Empty.</h2>
           )
